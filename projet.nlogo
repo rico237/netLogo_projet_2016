@@ -1,3 +1,7 @@
+extensions[
+  gis
+]
+
 globals [
   shapefile-dataset  ;; fichier contenant les informations sur la carte
   les-carrefours ;; les sites à l'intersection de plusieurs rues
@@ -20,10 +24,12 @@ to setup-carte
   ;; Créer le réseau des rues
   setup-reseau-routier
   ask les-sites [
-    set rues-adjacentes ??? ;; my-breed, reports an agentset of all links connected to the caller
-    set nb-rues-adjacentes (??? rues-adjacentes)
+    ;;Verifier cette ligne
+    set rues-adjacentes my-les-rues ;; my-breed, reports an agentset of all links connected to the caller
+    set nb-rues-adjacentes (count rues-adjacentes)
   ]
-  set les-carrefours les-sites with [???]
+  ;; Verifier cette ligne
+  set les-carrefours les-sites with [nb-rues-adjacentes > 2]
 end
 
 to setup-reseau-routier
@@ -77,19 +83,19 @@ to montrer-que-les-carrefours
 end
 
 to montrer-tous-les-sites
-  ask les-sites [???]
+  ask les-sites [show-turtle]
 end
 
 ;; FIN CONSTRUIRE LA CARTE ------------------------------------------
 @#$#@#$#@
 GRAPHICS-WINDOW
-210
-10
-649
-470
-16
-16
-13.0
+220
+37
+744
+582
+-1
+-1
+2.0
 1
 10
 1
@@ -99,15 +105,76 @@ GRAPHICS-WINDOW
 1
 1
 1
--16
-16
--16
-16
+0
+256
+0
+256
 0
 0
 1
 ticks
 30.0
+
+CHOOSER
+45
+87
+183
+132
+ville
+ville
+"Nice"
+0
+
+BUTTON
+48
+209
+152
+242
+setup-carte
+setup-carte
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+16
+259
+193
+292
+Montrer Les Carrefours
+montrer-que-les-carrefours
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+35
+312
+169
+345
+Montrer les sites
+montrer-tous-les-sites
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
